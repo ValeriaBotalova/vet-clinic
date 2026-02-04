@@ -36,10 +36,10 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100, verbose_name='Имя питомца')),
-                ('type', models.CharField(choices=[('cat', 'Кошка'), ('dog', 'Собака'), ('bird', 'Птица'), ('bunny', 'Кролик')], max_length=20)),
-                ('birth_date', models.DateField()),
-                ('gender', models.CharField(choices=[('female', 'Женский'), ('male', 'Мужской')], max_length=10)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pets', to='main.owner')),
+                ('type', models.CharField(choices=[('cat', 'Кошка'), ('dog', 'Собака'), ('bird', 'Птица'), ('bunny', 'Кролик')], max_length=20, verbose_name='Вид животного')),
+                ('birth_date', models.DateField(verbose_name='Дата рождения')),
+                ('gender', models.CharField(choices=[('female', 'Женский'), ('male', 'Мужской')], max_length=10, verbose_name='Пол')),
+                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pets', to='main.owner', verbose_name='Владелец')),
             ],
         ),
         migrations.CreateModel(
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('appointment_date', models.DateField(verbose_name='Дата приема')),
                 ('appointment_time', models.TimeField(verbose_name='Время приема')),
                 ('reason', models.CharField(max_length=255, verbose_name='Причина визита')),
-                ('doctor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.doctor')),
+                ('doctor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.doctor', verbose_name='Доктор')),
                 ('pet', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='appointments', to='main.pet')),
             ],
         ),

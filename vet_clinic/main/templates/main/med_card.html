@@ -1,0 +1,36 @@
+{% extends "main/layout.html" %}
+
+{% block content %}
+<h1>Медицинская карточка: {{ pet.name }}</h1>
+
+<h2>Информация о питомце</h2>
+<ul>
+    <li>Вид: {{ pet.get_type_display }}</li>
+    <li>Пол: {{ pet.get_gender_display }}</li>
+    <li>Дата рождения: {{ pet.birth_date }}</li>
+</ul>
+
+<h2>Владелец</h2>
+<ul>
+    <li>{{ pet.owner.last_name }} {{ pet.owner.name }}</li>
+    <li>Телефон: {{ pet.owner.phone }}</li>
+</ul>
+
+<h2>История визитов</h2>
+<table>
+    <tr>
+        <th>Дата</th>
+        <th>Врач</th>
+        <th>Причина визита</th>
+    </tr>
+    {% for appointment in appointments %}
+    <tr>
+        <td>{{ appointment.appointment_date }}</td>
+        <td>{{ appointment.doctor.last_name }} {{ appointment.doctor.name }}</td>
+        <td>{{ appointment.reason }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">Записей нет</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

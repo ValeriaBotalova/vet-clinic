@@ -1,0 +1,15 @@
+{% extends "main/layout.html" %}
+{% block content %}
+<h1>Список питомцев</h1>
+<ul>
+    {% for pet in pets %}
+        <li>
+            <a href="{% url 'medical_card' pet.id %}">
+                {{ pet.name }} ({{ pet.get_type_display }})
+            </a>
+        </li>
+    {% empty %}
+        <li>Питомцев нет</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,5 +1,7 @@
 from pyexpat.errors import messages
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+
+from .models import Pet
 from .forms import OwnerForm, PetForm, AppointmentForm
 
 def index(request):
@@ -30,4 +32,16 @@ def appointment(request):
         'owner_form': owner_form,
         'pet_form': pet_form,
         'appointment_form': appointment_form,
+    })
+
+def pet_list(request):
+    pets = Pet.objects.all()
+    return render(request, 'main/pet_list.html', {'pets': pets})
+
+def med_card(request, pet_id):
+    pet = get_object_or_404(Pet, id=pet_id)
+    appointments = pet.appointments.all().order_by('-appointment_date')
+    return render(request, 'main/med_card.html', {
+        'pet': pet,
+        'appointments': appointments
     })
