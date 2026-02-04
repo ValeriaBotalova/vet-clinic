@@ -1,36 +1,63 @@
 {% extends "main/layout.html" %}
 
 {% block content %}
-<h1>Медицинская карточка: {{ pet.name }}</h1>
+<div class="max-w-4xl mx-auto space-y-8">
 
-<h2>Информация о питомце</h2>
-<ul>
-    <li>Вид: {{ pet.get_type_display }}</li>
-    <li>Пол: {{ pet.get_gender_display }}</li>
-    <li>Дата рождения: {{ pet.birth_date }}</li>
-</ul>
+    <div class="bg-white rounded-xl shadow p-6">
+        <h1 class="text-3xl font-bold text-purple-500 py-2">
+            Медицинская карточка: {{ pet.name }}
+        </h1>
+        <h2 class="text-xl font-semibold mb-4">Информация о питомце</h2>
+        <ul class="space-y-2 text-gray-700">
+            <li><strong>Вид:</strong> {{ pet.get_type_display }}</li>
+            <li><strong>Пол:</strong> {{ pet.get_gender_display }}</li>
+            <li><strong>Дата рождения:</strong> {{ pet.birth_date }}</li>
+        </ul>
+        <h2 class="text-xl font-semibold my-5">Владелец</h2>
+        <ul class="space-y-2 text-gray-700">
+            <li>
+                {{ pet.owner.last_name }} {{ pet.owner.name }}
+            </li>
+            <li>
+                {{ pet.owner.phone }}
+            </li>
+        </ul>
+        <h2 class="text-xl font-semibold mb-4 my-5">История визитов</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-left">
+                        <th class="p-3 border">Дата</th>
+                        <th class="p-3 border">Врач</th>
+                        <th class="p-3 border">Причина визита</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-3 border">
+                            {{ appointment.appointment_date }}
+                        </td>
+                        <td class="p-3 border">
+                            {{ appointment.doctor.last_name }}
+                            {{ appointment.doctor.name }}
+                        </td>
+                        <td class="p-3 border">
+                            {{ appointment.reason }}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="p-4 text-center text-gray-500">
+                            Записей пока нет
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<h2>Владелец</h2>
-<ul>
-    <li>{{ pet.owner.last_name }} {{ pet.owner.name }}</li>
-    <li>Телефон: {{ pet.owner.phone }}</li>
-</ul>
-
-<h2>История визитов</h2>
-<table>
-    <tr>
-        <th>Дата</th>
-        <th>Врач</th>
-        <th>Причина визита</th>
-    </tr>
-    {% for appointment in appointments %}
-    <tr>
-        <td>{{ appointment.appointment_date }}</td>
-        <td>{{ appointment.doctor.last_name }} {{ appointment.doctor.name }}</td>
-        <td>{{ appointment.reason }}</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="3">Записей нет</td></tr>
-    {% endfor %}
-</table>
+</div>
 {% endblock %}
+

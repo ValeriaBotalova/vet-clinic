@@ -1,10 +1,21 @@
 {% extends "main/layout.html" %}
+{% load static %}
 {% block content %}
-<h1>Главная страница!</h1>
-<a href="{% url 'appointment' %}">
-    <button>Записаться на приём</button>
-</a>
-<a href="{% url 'pet_list' %}">
-    <button>Просмотр медицинских карточек</button>
-</a>
+<div class="flex flex-row">
+    <div class="flex flex-col gap-20 my-auto">
+        <a href="{% url 'appointment' %}">
+            <button class="bg-purple-500 rounded-xl text-white p-7 text-4xl">Записаться на приём</button>
+        </a>
+        <a href="{% url 'pet_list' %}">
+            <button class="bg-purple-500 rounded-xl text-white p-7 text-4xl">Просмотр медицинских карточек</button>
+        </a>
+        <a href="{% url 'admin:index' %}">
+            <button class="bg-purple-500 rounded-xl text-white p-7 text-4xl">
+                Панель администратора
+            </button>
+        </a>
+    </div>
+    
+    <img src="{% static 'main/img/img1.png'%}" alt="">
+</div>
 {% endblock %}

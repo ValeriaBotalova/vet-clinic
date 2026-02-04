@@ -1,15 +1,27 @@
 {% extends "main/layout.html" %}
 {% block content %}
-<h1>Список питомцев</h1>
-<ul>
+<h1 class="text-3xl font-bold text-purple-500 mb-6">Список питомцев</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for pet in pets %}
-        <li>
-            <a href="{% url 'medical_card' pet.id %}">
-                {{ pet.name }} ({{ pet.get_type_display }})
-            </a>
-        </li>
+        <a href="{% url 'medical_card' pet.id %}"
+           class="block bg-white rounded-xl shadow p-6 border border-gray-100">
+
+            <h2 class="text-xl font-semibold text-gray-800">
+                {{ pet.name }}
+            </h2>
+
+            <p class="text-gray-500 mt-2">
+                {{ pet.get_type_display }}
+            </p>
+
+            <p class="text-sm text-purple-500 mt-4">
+                Открыть карточку →
+            </p>
+        </a>
     {% empty %}
-        <li>Питомцев нет</li>
+        <div class="col-span-full text-gray-500 text-center py-10">
+            Питомцев пока нет
+        </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

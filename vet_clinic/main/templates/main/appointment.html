@@ -1,21 +1,49 @@
 {% extends "main/layout.html" %}
 
 {% block content %}
-<h1>Запись к врачу</h1>
+<div class="max-w-3xl mx-auto">
 
-<form method="post">
-    {% csrf_token %}
+    <h1 class="text-3xl font-bold text-purple-500 mb-6">
+        Запись к врачу
+    </h1>
 
-    <h2>Владелец</h2>
-    {{ owner_form.as_p }}
+    <form method="post" class="bg-white p-6 rounded-2xl shadow-md space-y-8">
+        {% csrf_token %}
 
-    <h2>Питомец</h2>
-    {{ pet_form.as_p }}
+        <section>
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">
+                Владелец
+            </h2>
+            <div class="space-y-4">
+                {{ owner_form.as_p }}
+            </div>
+        </section>
 
-    <h2>Приём</h2>
-    {{ appointment_form.as_p }}
+        <section>
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">
+                Питомец
+            </h2>
+            <div class="space-y-4">
+                {{ pet_form.as_p }}
+            </div>
+        </section>
 
-    <button type="submit">Подтвердить запись</button>
-</form>
+        <section>
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">
+                Приём
+            </h2>
+            <div class="space-y-4">
+                {{ appointment_form.as_p }}
+            </div>
+        </section>
 
+        <div class="pt-4">
+            <button
+                type="submit"
+                class="w-full bg-purple-500 text-white py-3 rounded-xl font-semibold">
+                Подтвердить запись
+            </button>
+        </div>
+    </form>
+</div>
 {% endblock %}

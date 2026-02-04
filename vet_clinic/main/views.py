@@ -1,5 +1,6 @@
 from pyexpat.errors import messages
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 
 from .models import Pet
 from .forms import OwnerForm, PetForm, AppointmentForm
@@ -23,6 +24,9 @@ def appointment(request):
             appointment = appointment_form.save(commit=False)
             appointment.pet = pet
             appointment.save()
+
+            messages.success(request,'Запись успешно создана. Мы ждём вас на приёме!')
+            return redirect('main')
     else:
         owner_form = OwnerForm(prefix='owner')
         pet_form = PetForm(prefix='pet')
