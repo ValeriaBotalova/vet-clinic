@@ -1,4 +1,21 @@
 {% extends "main/layout.html" %}
+
 {% block content %}
-<h1>Страница заявки!</h1>
+<h1>Запись к врачу</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <h2>Владелец</h2>
+    {{ owner_form.as_p }}
+
+    <h2>Питомец</h2>
+    {{ pet_form.as_p }}
+
+    <h2>Приём</h2>
+    {{ appointment_form.as_p }}
+
+    <button type="submit">Подтвердить запись</button>
+</form>
+
 {% endblock %}
