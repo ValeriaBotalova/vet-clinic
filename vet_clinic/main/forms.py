@@ -1,6 +1,7 @@
 from .models import Owner, Pet, Doctor, Appointment
 from django.forms import ModelForm
 from django import forms
+from django.core.exceptions import ValidationError
 
 class OwnerForm(ModelForm):
     class Meta:
@@ -61,3 +62,20 @@ class AppointmentForm(ModelForm):
                 'class': 'w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-400'
             }),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        doctor = cleaned_data.get('doctor')
+        date = cleaned_data.get('appointment_date')
+        time = cleaned_data.get('appointment_time')
+    
+        if doctor and date and time:
+            exists = Appointment.objects.filter(
+                doctor=doctor,
+                appointment_date=date,
+                appointment_time=time
+            ).exists()
+            if exists:
+                raise ValidationError(
+                    "На это время у данного врача уже есть запись. Пожалуйста, выберите другое время."
+                )
